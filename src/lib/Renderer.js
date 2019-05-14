@@ -8,6 +8,7 @@ class Renderer {
     this.model.bindView(this);
     this.$el = $(el);
 
+    
     if (this.getEvents) {
       const events = this.getEvents();
       const eventKeys = Object.keys(events);
@@ -30,6 +31,14 @@ class Renderer {
   render() {
     this.$el.html(this.template());
   }
+class QuizDisplay extends Renderer {
+  template() {
+    
+  }
+
+ }
+class QuizStatus extends Renderer { }
+
 }
 
 export default Renderer;
