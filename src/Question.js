@@ -11,12 +11,16 @@ class Question {
   }
 
   answerStatus() {
-    if (this.userAnswer === this.correctAnswer) {
-      this.answerStatus = 1;
-    } else if (this.userAnswer !== this.correctAnswer) {
-      this.answerStatus = 0;
+    if (this.userAnswer === null) {
+      return -1;
     }
-    return this.answerStatus;
+    if (this.userAnswer === this.correctAnswer) {
+      return 1;
+    }
+    if (this.userAnswer !== this.correctAnswer) {
+      return 0;
+    } 
+
   }
 
 
