@@ -33,7 +33,7 @@ class Quiz {
           // console.log(question);
           this.unasked.push(question);
         });
-        console.log(this.unasked);
+        console.log(q);
       });
   }
 
@@ -42,15 +42,19 @@ class Quiz {
       this.asked.push(this.unasked[0]);
       this.unasked.shift();
     } else {
-      this.scoreHistory = this.score;
-      this.active = !this.active;
+      this.scoreHistory.push(this.score);
+      this.active = false;
     }
+    console.log(q);
   }
 
-  submitAnswer() {
-    question.submitAnswer(userInput);
-    question.answerStatus();
-    this.score = question.answerStatus();
+  submitAnswer(userInput) {
+    let question = this.asked[this.asked.length-1];
+    question.userAnswer = userInput;
+    if (question.answerStatus() === 1) {
+      this.score += 1;
+    }
+    console.log(q);
   }
 
 

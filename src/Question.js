@@ -4,7 +4,6 @@ class Question {
     this.answer = apiAnswers;
     this.correctAnswer = apiCorrect;
     this.userAnswer = null;
-    this.answerStatus = -1;
   }
 
   submitAnswer(userInput) {
@@ -23,6 +22,6 @@ class Question {
 
 }
 
-const question1 = new Question();
+// const question1 = new Question();
 
 export default Question;
