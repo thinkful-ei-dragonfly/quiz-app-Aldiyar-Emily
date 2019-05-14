@@ -1,11 +1,13 @@
 import Question from './Question';
 import TriviaApi from './TriviaApi';
+import Model from './lib/Model';
 
-class Quiz {
+class Quiz extends Model {
 
   static DEFAULT_QUIZ_LENGTH = 5;
 
   constructor() {
+    super();
     this.api = new TriviaApi();
     // Array of Question instances
     this.unasked = [];
@@ -33,7 +35,7 @@ class Quiz {
           // console.log(question);
           this.unasked.push(question);
         });
-        console.log(q);
+        console.log(window.quiz);
       });
   }
 
@@ -45,7 +47,9 @@ class Quiz {
       this.scoreHistory.push(this.score);
       this.active = false;
     }
-    console.log(q);
+    console.log(this.unasked);
+    console.log(this.asked);
+    console.log(this.scoreHistory);
   }
 
   submitAnswer(userInput) {
@@ -54,7 +58,7 @@ class Quiz {
     if (question.answerStatus() === 1) {
       this.score += 1;
     }
-    console.log(q);
+    console.log(question);
   }
 
 

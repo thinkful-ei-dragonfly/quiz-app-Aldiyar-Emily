@@ -4,7 +4,7 @@ class Model {
     if (!Model.viewMap) Model.viewMap = new WeakMap();
     Model.viewMap.set(this, []);
   }
-  class Quiz extends Model { }
+ 
   bindView(view) {
     const views = Model.viewMap.get(this);
     views.push(view);

@@ -31,13 +31,8 @@ class Renderer {
   render() {
     this.$el.html(this.template());
   }
-class QuizDisplay extends Renderer {
-  template() {
-    
-  }
 
- }
-class QuizStatus extends Renderer { }
+// class QuizStatus extends Renderer { }
 
 }
 
