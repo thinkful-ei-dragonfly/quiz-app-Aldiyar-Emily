@@ -35,6 +35,9 @@ class Quiz extends Model {
           // console.log(question);
           this.unasked.push(question);
         });
+        this.asked.push(this.unasked[0]);
+        this.unasked.shift();
+        this.update();
         console.log(window.quiz);
       });
   }
@@ -43,9 +46,11 @@ class Quiz extends Model {
     if (this.unasked.length > 0) {
       this.asked.push(this.unasked[0]);
       this.unasked.shift();
+      this.update();
     } else {
       this.scoreHistory.push(this.score);
       this.active = false;
+      this.update();
     }
     console.log(this.unasked);
     console.log(this.asked);
@@ -57,6 +62,7 @@ class Quiz extends Model {
     question.userAnswer = userInput;
     if (question.answerStatus() === 1) {
       this.score += 1;
+      this.update();
     }
     console.log(question);
   }
