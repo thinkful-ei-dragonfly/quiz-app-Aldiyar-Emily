@@ -12,16 +12,17 @@ class Question {
   }
 
   answerStatus() {
-    if (this.userAnswer == this.correctAnswer) {
+    if (this.userAnswer === this.correctAnswer) {
       this.answerStatus = 1;
     } else if (this.userAnswer !== this.correctAnswer) {
       this.answerStatus = 0;
     }
+    return this.answerStatus;
   }
 
 
 }
 
-const question1 = new Question()
+const question1 = new Question();
 
 export default Question;

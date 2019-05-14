@@ -36,8 +36,25 @@ class Quiz {
         console.log(this.unasked);
       });
   }
-}
 
+  askQuestion() {
+    if (this.unasked.length > 0) {
+      this.asked.push(this.unasked[0]);
+      this.unasked.shift();
+    } else {
+      this.scoreHistory = this.score;
+      this.active = !this.active;
+    }
+  }
+
+  submitAnswer() {
+    question.submitAnswer(userInput);
+    question.answerStatus();
+    this.score = question.answerStatus();
+  }
+
+
+}
     
   
 
