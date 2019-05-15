@@ -7,6 +7,7 @@ class QuizDisplay extends Renderer {
     getEvents() {
         return {
           'click .start-quiz': 'handleStart',
+          'click .submit-answer': 'handleSubmitAnswer',
           'click .next-question': 'handleNextQuestion',
           // 'click .start-new': 'handleStart,'
         };
@@ -28,20 +29,48 @@ class QuizDisplay extends Renderer {
     `;
     }
   
-  _generateQuestionPage() {
-    const answer = this.model.asked[this.model.asked.length-1].answer.map(ans => {
-      return `<input type='radio' name='answer' id='js-answer' value='${ans}' /><label for='js-answer'>${ans}</label>`;
-    }).join('');
-    const text = this.model.asked[this.model.asked.length-1].text;
+    _generateQuestionPage() {
+      const answer = this.model.asked[this.model.asked.length-1].answer.map(ans => {
+        return `<input type='radio' name='answer' id='${ans}' value='${ans}' /><label for='${ans}'>${ans}</label>`;
+      }).join('');
+      const text = this.model.asked[this.model.asked.length-1].text;
   
+      return `
+        <div>
+        <h2>${text}</h2>
+        <form>
+          ${answer}
+        </form>  
+        <button class='submit-answer'>Submit Answer</button>
+      `;
+    }
+  _generateCorrectAnswerPage() {
+    const text = this.model.asked[this.model.asked.length - 1].text;
+    const correctAns = this.model.asked[this.model.asked.length - 1].correctAnswer;
     return `
       <div>
-      <p>${text}<p>
-      <form>
-        ${answer}
-      </form>  
-      <button class='next-question'>Submit Answer</button>
-    `;
+        <h2>${text}</h2>
+        <h3>You got it!</h3>
+        <h3>The correct answer was:</h3>
+        <h4>${correctAns}</h4>
+        <button class='next-question'>Next question</button>
+      </div>`;
+  }
+  
+  _generateIncorrectAnswerPage() {
+    const text = this.model.asked[this.model.asked.length - 1].text;
+    const correctAns = this.model.asked[this.model.asked.length - 1].correctAnswer;
+    const userAns = this.model.asked[this.model.asked.length - 1].userAnswer;
+    return `
+      <div>
+        <h2>${text}</h2>
+        <h3>Sorry, that is incorrect</h3>
+        <h3>Your answer is:</h3>
+        <h4>${userAns}</h4>
+        <h3>The correct answer was:</h3>
+        <h4>${correctAns}</h4>
+        <button class='next-question'>Next question</button>
+      </div>`;
   }
   
   // _generateResultPage() {
@@ -63,6 +92,7 @@ class QuizDisplay extends Renderer {
         if (this.model.asked.length > 0) {
           html = this._generateQuestionPage();
         }
+        if (this.model.asked.question)
       // if (this.model.unasked.length === 0) {
       //   html = this._generateResutPage();
       //   }
@@ -76,6 +106,10 @@ class QuizDisplay extends Renderer {
   
     handleNextQuestion() {
       this.model.askQuestion();
+    }
+  
+    handleQuestionSubmit() {
+      this.model.submitAnswer();
     }
 }
 
