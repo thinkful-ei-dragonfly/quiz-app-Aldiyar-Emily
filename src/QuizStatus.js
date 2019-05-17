@@ -13,7 +13,7 @@ class QuizStatus extends Renderer {
 
 
         return `
-      <div>
+      <div class='status-bar'>
         <span>Score :${this.model.score}</span>
         <span>High Score: ${maxNum}</span>
         <span>Progress: ${currentProgress}</span> 
