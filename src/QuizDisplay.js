@@ -7,9 +7,9 @@ class QuizDisplay extends Renderer {
     getEvents() {
         return {
           'click .start-quiz': 'handleStart',
-          'click .submit-answer': 'handleSubmitAnswer',
+          'submit form': 'handleSubmitAnswer',
           'click .next-question': 'handleNextQuestion',
-          // 'click .start-new': 'handleStart,'
+          'click .start-new': 'handleRestart',
         };
     }
 
@@ -31,7 +31,7 @@ class QuizDisplay extends Renderer {
   
     _generateQuestionPage() {
       const answer = this.model.asked[this.model.asked.length-1].answer.map(ans => {
-        return `<input type='radio' name='answer' id='${ans}' value='${ans}' /><label for='${ans}'>${ans}</label>`;
+        return `<input type='radio' name='answer' id='${ans}' value='${ans}' required/><label for='${ans}'>${ans}</label>`;
       }).join('');
       const text = this.model.asked[this.model.asked.length-1].text;
   
@@ -40,8 +40,9 @@ class QuizDisplay extends Renderer {
         <h2>${text}</h2>
         <form>
           ${answer}
+          <button type='submit' class='submit-answer'>Submit Answer</button>
         </form>  
-        <button class='submit-answer'>Submit Answer</button>
+        
       `;
     }
   _generateCorrectAnswerPage() {
@@ -73,34 +74,37 @@ class QuizDisplay extends Renderer {
       </div>`;
   }
   
-  // _generateResultPage() {
-  //   return `
-  //   <h2>Good Job</h2>
-  //   <h3>your score was ${this.model.score} out of 5</h3>
-  //   <button class='start-new'>Start Again</button>
-  //   `;
-  // }
+  _generateFinish() {
+    return `
+    <h2>Good Job</h2>
+    <h3>Your score was ${this.model.score} out of 5</h3>
+    <button class='start-new'>Start Again</button>
+    `;
+  }
 
     template() {
       let html = '';
       console.log(this.model);
+      const currentQ = this.model.asked[this.model.asked.length - 1];
 
         if (this.model.asked.length === 0) {
             // Quiz has not started
             html = this._generateIntro();
-        }
-        if (this.model.asked.length > 0) {
+        } else if (this.model.asked.length === 5) {
+          html = this._generateFinish();
+        } else if (this.model.asked.length > 0 && currentQ.userAnswer === null) {
           html = this._generateQuestionPage();
+        } else if (currentQ.userAnswer === currentQ.correctAnswer) {
+          html = this._generateCorrectAnswerPage();
+        } else if (currentQ.userAnswer !== currentQ.correctAnswer ) {
+          html = this._generateIncorrectAnswerPage();
         }
-        if (this.model.asked.question)
-      // if (this.model.unasked.length === 0) {
-      //   html = this._generateResutPage();
-      //   }
+
 
         return html;
     }
 
-    handleStart() {
+    handleStart(event) {
       this.model.startGame();
     }
   
@@ -108,8 +112,14 @@ class QuizDisplay extends Renderer {
       this.model.askQuestion();
     }
   
-    handleQuestionSubmit() {
-      this.model.submitAnswer();
+    handleSubmitAnswer(event) {
+      event.preventDefault();
+      console.log(event.target.answer.value);
+      this.model.submitAnswer(event.target.answer.value);
+    }
+
+    handleRestart() {
+      this.model.reset();
     }
 }
 

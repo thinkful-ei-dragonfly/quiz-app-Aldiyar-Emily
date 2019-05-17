@@ -62,11 +62,19 @@ class Quiz extends Model {
     question.userAnswer = userInput;
     if (question.answerStatus() === 1) {
       this.score += 1;
-      this.update();
     }
-    console.log(question);
+    this.update();
+    console.log(userInput);
+
   }
 
+  reset() {
+    this.asked = [];
+    this.scoreHistory.push(this.score);
+    this.score = 0;
+    this.update();
+  }
+  
 
 }
     

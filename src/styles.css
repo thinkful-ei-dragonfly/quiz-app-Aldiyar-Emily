@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Macondo+Swash+Caps&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: 'Macondo Swash Caps';
+}
+
+body {
+  text-align: center;
+  line-height: 1.5;
+}
+
+.status {
+  background-color: grey;
+}
